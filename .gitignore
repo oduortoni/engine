@@ -1,3 +1,9 @@
+# executable name
+engine
+
+# project specific personal notes
+notes/
+
 # Prerequisites
 *.d
 
@@ -6,6 +12,7 @@
 *.ko
 *.obj
 *.elf
+**/*.o
 
 # Linker output
 *.ilk
