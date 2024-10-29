@@ -1,5 +1,6 @@
 # executable name
-engine
+bin/engine
+bin/test
 
 # project specific personal notes
 notes/
