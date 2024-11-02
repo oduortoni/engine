@@ -1,6 +1,6 @@
 # Main program
 
-objects = objects/main.o objects/vector.o
+objects = objects/main.o objects/vector.o objects/matrix.o
 
 engine: $(objects)
 	cc -o bin/engine $(objects) -lm
@@ -11,6 +11,8 @@ objects/main.o:
 objects/vector.o:
 	cc -c src/vector.c -o objects/vector.o
 
+objects/matrix.o:
+	cc -c src/matrix.c -o objects/matrix.o
 
 ## Testing
 
