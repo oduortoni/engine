@@ -1,23 +1,21 @@
-#include <stdio.h>
-#include <math.h>
-
 #include "header.h"
 
 int main() {
-    Vector3 v = {1.0f, 2.0f, 3.0f};
+    Vector3 point = {1.0f, 1.0f, 5.0f}; // A point in 3D space
 
-    TMatrix transMat = translationMatrix(3.0f, 4.0f, 5.0f);
-    Vector3 translatedV = multiplyMatrixVector(transMat, v);
-    printf("Translated Vector: (%.2f, %.2f, %.2f)\n", translatedV.x, translatedV.y, translatedV.z);
+    // Define a field of view (in radians), aspect ratio, near and far clipping planes
+    float fov = M_PI / 4.0f; // 45 degrees
+    float aspect_ratio = 16.0f / 9.0f;
+    float z_near = 0.1f;
+    float z_far = 100.0f;
 
-    TMatrix scaleMat = scalingMatrix(2.0f, 2.0f, 2.0f);
-    Vector3 scaledV = multiplyMatrixVector(scaleMat, v);
-    printf("Scaled Vector: (%.2f, %.2f, %.2f)\n", scaledV.x, scaledV.y, scaledV.z);
+    // Create the projection matrix
+    TMatrix projMatrix = initProjectionMatrix(fov, aspect_ratio, z_near, z_far);
 
-    float forty5degrees = M_PI / 4;  // Rotate 45 degrees around X-axis
-    TMatrix rotMatX = rotationMatrixX(forty5degrees);
-    Vector3 rotatedV = multiplyMatrixVector(rotMatX, v);
-    printf("Rotated Vector around X: (%.2f, %.2f, %.2f)\n", rotatedV.x, rotatedV.y, rotatedV.z);
+    // Project the point
+    Vector3 projectedPoint = project(point, projMatrix);
+
+    printf("Projected Point: (%.2f, %.2f, %.2f)\n", projectedPoint.x, projectedPoint.y, projectedPoint.z);
 
     return 0;
 }

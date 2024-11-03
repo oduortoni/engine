@@ -1,5 +1,3 @@
-#include <math.h>
-
 #include "header.h"
 
 TMatrix identityMatrix() {

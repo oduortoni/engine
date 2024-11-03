@@ -1,6 +1,9 @@
 #ifndef _HEADER_H
 #define _HEADER_H
 
+#include <stdio.h>
+#include <math.h>
+
 #ifndef M_PI
     #define M_PI 3.14159265358979323846
 #endif // M_PI
@@ -29,5 +32,8 @@ TMatrix rotationMatrixX(float angle);
 TMatrix rotationMatrixY(float angle);
 TMatrix rotationMatrixZ(float angle);
 Vector3 multiplyMatrixVector(TMatrix mat, Vector3 v);
+
+TMatrix initProjectionMatrix(float fov, float aspect_ratio, float z_near, float z_far);
+Vector3 project(Vector3 v, TMatrix projMatrix);
 
 #endif // _HEADER_H
