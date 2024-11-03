@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <stdbool.h>
 
 #ifndef M_PI
     #define M_PI 3.14159265358979323846
@@ -35,5 +36,24 @@ Vector3 multiplyMatrixVector(TMatrix mat, Vector3 v);
 
 TMatrix initProjectionMatrix(float fov, float aspect_ratio, float z_near, float z_far);
 Vector3 project(Vector3 v, TMatrix projMatrix);
+
+// triangle
+typedef struct {
+    Vector3 v0;
+    Vector3 v1;
+    Vector3 v2;
+} Triangle;
+
+Vector3 triNormal(Triangle tri);
+bool isFacingCamera(Triangle tri);
+
+void triangle(Triangle tri, TMatrix projMatrix, char **screen, int screenWidth, int screenHeight);
+void line(int x0, int y0, int x1, int y1, char **screen, int screenWidth, int screenHeight);
+
+// screen
+void render(char **screen, int screenWidth, int screenHeight);
+void clear(char **screen, int screenWidth, int screenHeight);
+void toScreenCoord(Vector3 point, int *screenX, int *screenY, int screenWidth, int screenHeight);
+void renderTriangle(Triangle tri, TMatrix projMatrix, char **screen, int screenWidth, int screenHeight);
 
 #endif // _HEADER_H

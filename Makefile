@@ -1,6 +1,6 @@
 # Main program
 
-objects = objects/main.o objects/vector.o objects/matrix.o objects/projection.o
+objects = objects/main.o objects/vector.o objects/matrix.o objects/projection.o objects/triangle.o objects/screen.o
 
 engine: $(objects)
 	cc -o bin/engine $(objects) -lm
@@ -16,6 +16,12 @@ objects/matrix.o:
 
 objects/projection.o:
 	cc -c src/projection.c -o objects/projection.o
+
+objects/triangle.o:
+	cc -c src/triangle.c -o objects/triangle.o
+
+objects/screen.o:
+	cc -c src/screen.c -o objects/screen.o
 
 ## Testing
 
