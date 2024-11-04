@@ -69,12 +69,11 @@ TMatrix rotationMatrixZ(float angle) {
 // in order to apply a transformation to a vector, we multiply it by a matrix that has our desired effect
 // it is a normal 3 by 3 multiplication but with the translation components added from the fourth column in order
 // to apply whatever translation the matrix offers
-Vector3 multiplyMatrixVector(TMatrix mat, Vector3 v) {
-    Vector3 result;
+Vector4 multiplyMatrixVector(TMatrix mat, Vector3 v) {
+    Vector4 result;
     result.x = v.x * mat.m[0][0] + v.y * mat.m[0][1] + v.z * mat.m[0][2] + mat.m[0][3];
     result.y = v.x * mat.m[1][0] + v.y * mat.m[1][1] + v.z * mat.m[1][2] + mat.m[1][3];
     result.z = v.x * mat.m[2][0] + v.y * mat.m[2][1] + v.z * mat.m[2][2] + mat.m[2][3];
+    result.w = v.x * mat.m[3][0] + v.y * mat.m[3][1] + v.z * mat.m[3][2] + mat.m[3][3];
     return result;
 }
-
-

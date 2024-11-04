@@ -58,3 +58,10 @@ Vector3 normalize(Vector3 v) {
     float mag = magnitude(v);
     return (Vector3){v.x / mag, v.y / mag, v.z / mag};
 }
+
+/*
+* pvec helps print the points of avector
+*/
+void pvec(Vector3 p) {
+    printf("(x: %f, y: %f, z: %f)", p.x, p.y, p.z);
+}

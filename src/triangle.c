@@ -51,6 +51,7 @@ void line(int x0, int y0, int x1, int y1, char **screen, int screenWidth, int sc
     }
 }
 
+// renders a triangle on screen
 void triangle(Triangle tri, TMatrix projMatrix, char **screen, int screenWidth, int screenHeight) {
     if (!isFacingCamera(tri)) return;
 
@@ -58,12 +59,22 @@ void triangle(Triangle tri, TMatrix projMatrix, char **screen, int screenWidth, 
     Vector3 pV1 = project(tri.v1, projMatrix);
     Vector3 pV2 = project(tri.v2, projMatrix);
 
+    // printf("After projection:\n");
+    // printf("pV0 "); pvec(pV0); printf("\n");
+    // printf("pV1 "); pvec(pV1); printf("\n");
+    // printf("pV2 "); pvec(pV2); printf("\n");
 
     int x0, y0, x1, y1, x2, y2;
     toScreenCoord(pV0, &x0, &y0, screenWidth, screenHeight);
     toScreenCoord(pV1, &x1, &y1, screenWidth, screenHeight);
     toScreenCoord(pV2, &x2, &y2, screenWidth, screenHeight);
 
+    // printf("After screen conversion:\n");
+    // printf("x0: %d, y0: %d\n", x0, y0);
+    // printf("x1: %d, y1: %d\n", x1, y1);
+    // printf("x2: %d, y2: %d\n", x2, y2);
+
+    // Render points and edges if within bounds
     // place '.' characters at each vertex
     if (x0 >= 0 && x0 < screenWidth && y0 >= 0 && y0 < screenHeight) {
         screen[y0][x0] = '.';

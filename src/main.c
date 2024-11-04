@@ -38,8 +38,8 @@ int main() {
 
 
     // draw the triangle
-    // triangle(tri, projMatrix, screen, SCREEN_WIDTH, SCREEN_HEIGHT);
-    line(10, 10, 26, 16, screen, SCREEN_WIDTH, SCREEN_HEIGHT);
+    triangle(tri, projMatrix, screen, SCREEN_WIDTH, SCREEN_HEIGHT);
+    // line(10, 10, 26, 16, screen, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     // Render the screen
     render(screen, SCREEN_WIDTH, SCREEN_HEIGHT);

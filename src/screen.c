@@ -21,6 +21,7 @@ void clear(char **screen, int screenWidth, int screenHeight) {
 
 // convert any cordinate to the screen cordinate
 void toScreenCoord(Vector3 point, int *screenX, int *screenY, int screenWidth, int screenHeight) {
-    *screenX = (int)((point.x + 1) * 0.5 * screenWidth);
-    *screenY = (int)((1 - point.y) * 0.5 * screenHeight);
+    *screenX = (int)((point.x + 1.0f) * 0.5f * screenWidth);   // Map x from [-1, 1] to [0, screenWidth]
+    *screenY = (int)((1.0f - point.y) * 0.5f * screenHeight);  // Map y from [-1, 1] to [0, screenHeight]
 }
+
