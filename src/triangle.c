@@ -60,9 +60,9 @@ void triangle(Triangle tri, TMatrix projMatrix, char **screen, int screenWidth, 
     Vector3 pV2 = project(tri.v2, projMatrix);
 
     // printf("After projection:\n");
-    // printf("pV0 "); pvec(pV0); printf("\n");
-    // printf("pV1 "); pvec(pV1); printf("\n");
-    // printf("pV2 "); pvec(pV2); printf("\n");
+    // printf("pV0 "); printV3(pV0); printf("\n");
+    // printf("pV1 "); printV3(pV1); printf("\n");
+    // printf("pV2 "); printV3(pV2); printf("\n");
 
     int x0, y0, x1, y1, x2, y2;
     toScreenCoord(pV0, &x0, &y0, screenWidth, screenHeight);

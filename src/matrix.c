@@ -1,5 +1,8 @@
 #include "header.h"
 
+// create an identity matrix
+// produces a homogenous Vector4 from  Vector3 with the w component also initialized to 1
+// any Vector3 multiplied by this produces a homogenous matrix, Vector4 with w as 1
 TMatrix identityMatrix() {
     TMatrix mat = {0};
     for (int i = 0; i < 4; i++) {

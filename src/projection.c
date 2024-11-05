@@ -12,7 +12,12 @@ TMatrix initProjectionMatrix(float fov, float aspect, float zNear, float zFar) {
     return proj;
 }
 
-
+/*
+* project necessary for projecting 3d cooord onto a 2d space
+* Given a homogenous matrix with a homogenous coord, w, we perform perspective division
+* i.e divide the other coordinates by w
+* we then discard w and are left with a Vector that is a representation of a 3d vector projected onto a 2d space
+**/
 Vector3 project(Vector3 v, TMatrix projMatrix) {
     Vector4 transformed = multiplyMatrixVector(projMatrix, v);
     

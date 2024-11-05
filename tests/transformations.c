@@ -1,4 +1,4 @@
-#include "header.h"
+#include "../src/header.h"
 
 // Identity Matrix Test
 void testMultiplyByIdentityMatrix(Vector3 input) {
@@ -55,7 +55,7 @@ void testPerspectiveProjection(Vector3 input3d, TMatrix projMatrix) {
     printV3("Perspective Projection Output", projectedto2d);
 }
 
-int main() {
+void transformations() {
     Vector3 v3 = { 1.0f, 2.0f, 3.0f };
 
     puts(" ");
@@ -98,6 +98,4 @@ int main() {
     // if w gt than 1 then farther objects appear smaller
     testPerspectiveProjection(v3, projMatrix);
     puts("");
-
-    return 0;
 }

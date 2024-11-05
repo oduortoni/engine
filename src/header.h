@@ -25,7 +25,8 @@ float dot(Vector3 a, Vector3 b);
 Vector3 cross(Vector3 a, Vector3 b);
 float magnitude(Vector3 v);
 Vector3 normalize(Vector3 v);
-void pvec(Vector3 p);
+void printV3(const char* label, Vector3 v);
+void printV4(const char* label, Vector4 v);
 
 typedef struct TransformationMatrix {
     float m[4][4];

@@ -60,8 +60,16 @@ Vector3 normalize(Vector3 v) {
 }
 
 /*
-* pvec helps print the points of avector
+* pvec helps print the points of a 3-component vector
 */
-void pvec(Vector3 p) {
-    printf("(x: %f, y: %f, z: %f)", p.x, p.y, p.z);
+// Print function for Vector3
+void printV3(const char* label, Vector3 v) {
+    printf("%s (x: %f, y: %f, z: %f)\n", label, v.x, v.y, v.z);
+}
+
+/*
+* pvec helps print the points of a 4-component vector => homogenous vector
+*/
+void printV4(const char* label, Vector4 v) {
+    printf("%s (x: %f, y: %f, z: %f, w: %f)\n", label, v.x, v.y, v.z, v.w);
 }
