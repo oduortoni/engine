@@ -61,6 +61,13 @@ Vector3 triangleSurfaceNormal(Triangle tri);
 float lightIntensity(Vector3 normal, Vector3 lightDir);
 char lightIntensityShade(float intensity);
 
+// a camera struct with the ability to only rotate around the Y-axis
+typedef struct {
+    Vector3 position;
+    float rotationY;
+} Camera;
+void cameraUpdateReference(Camera *camera, char input);
+
 // screen
 void render(char **screen, int screenWidth, int screenHeight);
 void clear(char **screen, int screenWidth, int screenHeight);

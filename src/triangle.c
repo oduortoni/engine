@@ -56,6 +56,10 @@ void line(int x0, int y0, int x1, int y1, char **screen, int screenWidth, int sc
 void triangle(Triangle tri, TMatrix projMatrix, char **screen, int screenWidth, int screenHeight, Vector3 lightDir) {
     if (!isFacingCamera(tri)) return;
 
+    printV3("TRa v0", tri.v0);
+    printV3("TRa v1", tri.v1);
+    printV3("TRa v2", tri.v2);
+
     // project each vertex of the triangle onto 2d space
     Vector3 pV0 = project(tri.v0, projMatrix);
     Vector3 pV1 = project(tri.v1, projMatrix);
