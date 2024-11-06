@@ -26,11 +26,11 @@ int abs(int n) {
 /*
 * Bresenham line algorithm to plot a line between vertices
 */
-void line(int x0, int y0, int x1, int y1, char **screen, int screenWidth, int screenHeight) {
-    // check if starting and ending points are within screen bounds
+void line(int x0, int y0, int x1, int y1, char **screen, int screenWidth, int screenHeight, char shade) {
+    // are starting and ending points are within screen bounds
     if (x0 < 0 || x0 >= screenWidth || y0 < 0 || y0 >= screenHeight ||
         x1 < 0 || x1 >= screenWidth || y1 < 0 || y1 >= screenHeight) {
-        fprintf(stderr, "Error: Line coordinates out of bounds\n");
+        fprintf(stderr, "Warning: Line coordinates out of bounds\n");
         return;
     }
 
@@ -39,9 +39,9 @@ void line(int x0, int y0, int x1, int y1, char **screen, int screenWidth, int sc
     int err = dx + dy, e2;
 
     while (1) {
-        // check if we are still within bounds before drawing
+        // check bounds before drawing
         if (y0 >= 0 && y0 < screenHeight && x0 >= 0 && x0 < screenWidth) {
-            screen[y0][x0] = '.';
+            screen[y0][x0] = shade;
         }
 
         if (x0 == x1 && y0 == y1) break;
@@ -51,43 +51,60 @@ void line(int x0, int y0, int x1, int y1, char **screen, int screenWidth, int sc
     }
 }
 
+
 // renders a triangle on screen
-void triangle(Triangle tri, TMatrix projMatrix, char **screen, int screenWidth, int screenHeight) {
+void triangle(Triangle tri, TMatrix projMatrix, char **screen, int screenWidth, int screenHeight, Vector3 lightDir) {
     if (!isFacingCamera(tri)) return;
 
+    // project each vertex of the triangle onto 2d space
     Vector3 pV0 = project(tri.v0, projMatrix);
     Vector3 pV1 = project(tri.v1, projMatrix);
     Vector3 pV2 = project(tri.v2, projMatrix);
 
-    // printf("After projection:\n");
-    // printf("pV0 "); printV3(pV0); printf("\n");
-    // printf("pV1 "); printV3(pV1); printf("\n");
-    // printf("pV2 "); printV3(pV2); printf("\n");
-
+    // convert projected vertices to screen coordinates
     int x0, y0, x1, y1, x2, y2;
     toScreenCoord(pV0, &x0, &y0, screenWidth, screenHeight);
     toScreenCoord(pV1, &x1, &y1, screenWidth, screenHeight);
     toScreenCoord(pV2, &x2, &y2, screenWidth, screenHeight);
 
-    // printf("After screen conversion:\n");
-    // printf("x0: %d, y0: %d\n", x0, y0);
-    // printf("x1: %d, y1: %d\n", x1, y1);
-    // printf("x2: %d, y2: %d\n", x2, y2);
+    // calculate surface normal of the triangle for lighting
+    Vector3 normal = triangleSurfaceNormal(tri);
 
-    // Render points and edges if within bounds
-    // place '.' characters at each vertex
-    if (x0 >= 0 && x0 < screenWidth && y0 >= 0 && y0 < screenHeight) {
-        screen[y0][x0] = '.';
-    }
-    if (x1 >= 0 && x1 < screenWidth && y1 >= 0 && y1 < screenHeight) {
-        screen[y1][x1] = '.';
-    }
-    if (x2 >= 0 && x2 < screenWidth && y2 >= 0 && y2 < screenHeight) {
-        screen[y2][x2] = '.';
+    // Calculate the intensity of light on the surface
+    float intensity = lightIntensity(normal, lightDir);
+    
+    // select a representative token based on intensity
+    char shade = lightIntensityShade(intensity);
+
+    // draw edges between the vertices with lighting
+    line(x0, y0, x1, y1, screen, screenWidth, screenHeight, shade);
+    line(x1, y1, x2, y2, screen, screenWidth, screenHeight, shade);
+    line(x2, y2, x0, y0, screen, screenWidth, screenHeight, shade);
+}
+
+/*
+* The surface normal of a triangle is a vector that is perpendicular to the plane of the triangel
+* We can get this through the cross product of two adjacent edges
+* We eventually normalize the vector we get in order to make for simpler calculations
+*/
+Vector3 triangleSurfaceNormal(Triangle tri) {
+    Vector3 u = { tri.v1.x - tri.v0.x, tri.v1.y - tri.v0.y, tri.v1.z - tri.v0.z };
+    Vector3 v = { tri.v2.x - tri.v0.x, tri.v2.y - tri.v0.y, tri.v2.z - tri.v0.z };
+    
+    // cross product
+    Vector3 normal = {
+        .x = u.y * v.z - u.z * v.y,
+        .y = u.z * v.x - u.x * v.z,
+        .z = u.x * v.y - u.y * v.x
+    };
+
+    // normalization
+    float length = sqrt(normal.x * normal.x + normal.y * normal.y + normal.z * normal.z);
+    if (length != 0) {
+        normal.x /= length;
+        normal.y /= length;
+        normal.z /= length;
     }
 
-    // draw edges between the vertices
-    line(x0, y0, x1, y1, screen, screenWidth, screenHeight);
-    line(x1, y1, x2, y2, screen, screenWidth, screenHeight);
-    line(x2, y2, x0, y0, screen, screenWidth, screenHeight);
+    return normal;
 }

@@ -53,8 +53,13 @@ typedef struct {
 Vector3 triNormal(Triangle tri);
 bool isFacingCamera(Triangle tri);
 
-void triangle(Triangle tri, TMatrix projMatrix, char **screen, int screenWidth, int screenHeight);
-void line(int x0, int y0, int x1, int y1, char **screen, int screenWidth, int screenHeight);
+void triangle(Triangle tri, TMatrix projMatrix, char **screen, int screenWidth, int screenHeight, Vector3 lightDir);
+void line(int x0, int y0, int x1, int y1, char **screen, int screenWidth, int screenHeight, char shade);
+Vector3 triangleSurfaceNormal(Triangle tri);
+
+// light
+float lightIntensity(Vector3 normal, Vector3 lightDir);
+char lightIntensityShade(float intensity);
 
 // screen
 void render(char **screen, int screenWidth, int screenHeight);
